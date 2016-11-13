@@ -1,0 +1,16 @@
+Pendings:
+        map integration
+        auth test
+        settings/reminder create test
+        checkNotifier dev/test
+        locationUpdater test
+        gps data retrieval dev/test
+
+
+Current:
+        auth test
+        settings/reminder create test
+
+
+
+Done:
