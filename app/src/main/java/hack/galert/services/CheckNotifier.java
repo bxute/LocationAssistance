@@ -14,20 +14,23 @@ import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import hack.galert.DeviceSettingsConfiguration.SettingsConfigurer;
 import hack.galert.GPS.GPSTracker;
+import hack.galert.GPS.LocalLocationManager;
 import hack.galert.converter.GeoDistanceCalculator;
 import hack.galert.database.LocalDatabaseHelper;
 import hack.galert.models.SMLReminderModel;
 import hack.galert.models.SettingsModel;
+import hack.galert.notification.LocalNotificationManager;
 
 /**
  * Created by Ankit on 10/24/2016.
  */
-public class CheckNotifier extends Service {
+public class CheckNotifier extends Service implements LocationListener {
 
     public static final int NOTIFICATION_TYPE_SETTINGS = 0;
     public static final int NOTIFICATION_TYPE_REMINDER = 1;
-    public static final int MIN_DISTANCE = 25; // area coverage
+    public static final int MIN_DISTANCE = 50; // area coverage
     private double mCurrentLat = 0;
     private double mCurrentLon = 0;
     private GPSTracker tracker;
@@ -80,7 +83,7 @@ public class CheckNotifier extends Service {
             double distance = distanceCalculator.setLatitudes(setting.getLatitude(),mCurrentLat)
                                                 .setLongitude(setting.getLongitude(),mCurrentLon)
                                                 .getDistanceInMeter();
-
+            Log.d("Checker"," checking settings : dist "+distance);
             if(distance <= MIN_DISTANCE){
                 configureSettings(setting);
             }
@@ -105,7 +108,9 @@ public class CheckNotifier extends Service {
                     .setLongitude(reminder.getLongitude(),mCurrentLon)
                     .getDistanceInMeter();
 
+            Log.d("Checker"," checking reminder : dist "+distance);
             if(distance <= MIN_DISTANCE){
+
                     remind(reminder);
             }
         }
@@ -115,10 +120,58 @@ public class CheckNotifier extends Service {
 
     private void remind(SMLReminderModel reminder){          // notification for reminder
         Log.d("Checker","there is some reminder");
+
+        LocalNotificationManager manager = LocalNotificationManager.getInstance(this);
+        Log.d("Service",""+reminder.title+"\n"+reminder.content);
+        manager.launchNotification(reminder.content,reminder._id_reminder);
+
     }
 
     private void configureSettings(SettingsModel setting){   // change settings
         Log.d("Checker","there is some setting to set");
+
+
+        SettingsConfigurer configurer = SettingsConfigurer.getInstance(this);
+
+        configurer.putBluetooth(setting.bluetoothState);
+        configurer.putWifi(setting.wifiState);
+        configurer.setMobileData(setting.mobileDataState);
+
+        if(setting.isVibrationMode()){
+            configurer.putOnVibration();
+        }
+        else{
+            configurer.putOnNormalMode();
+        }
+
+
+
+
+    }
+
+    @Override
+    public void onLocationChanged(Location location) {
+
+        mCurrentLon = location.getLongitude();
+        mCurrentLat = location.getLatitude();
+        checkReminders();
+        checkSettings();
+
+    }
+
+    @Override
+    public void onStatusChanged(String s, int i, Bundle bundle) {
+
+    }
+
+    @Override
+    public void onProviderEnabled(String s) {
+
+    }
+
+    @Override
+    public void onProviderDisabled(String s) {
+
     }
 
 
@@ -128,6 +181,7 @@ public class CheckNotifier extends Service {
         public void run() {
             // read all data base and match with current location
 
+            Log.d("Checker"," checking ..................");
             retrieveLocation();
             checkReminders();
             checkSettings();

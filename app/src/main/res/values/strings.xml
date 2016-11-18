@@ -16,4 +16,7 @@
     <string name="title_activity_location_track">Map</string>
     <string name="title_activity_reminders">Reminders</string>
     <string name="title_activity_auto_settings">AutoSettings</string>
+    <string name="title_activity_location_summary">LocationSummary</string>
+    <string name="title_activity_issues">Issues</string>
+    <string name="title_activity_test">Map</string>
 </resources>

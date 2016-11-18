@@ -49,8 +49,6 @@ public class CreateReminders extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle("Create Reminder");
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
     }
     private void initViews(){
@@ -74,8 +72,8 @@ public class CreateReminders extends AppCompatActivity {
 
     private void uploadReminders(){
 
-       final String lat = String.valueOf(new GPSTracker(this).getLatitude());
-       final String lon = String.valueOf(new GPSTracker(this).getLongitude());
+       final String lat = String.valueOf(getIntent().getExtras().getDouble("lat"));
+       final String lon = String.valueOf(getIntent().getExtras().getDouble("lon"));
 
         final String url = URLS.URL_REMINDERS_SET;
         Log.d("Reminders","attempt Uploading reminders");
@@ -87,6 +85,8 @@ public class CreateReminders extends AppCompatActivity {
                     public void onResponse(String s) {
                         Log.d("Reminders"," response "+s);
                         progressDialog.dismiss();
+                        startActivity(new Intent(CreateReminders.this,Reminders.class));
+                        finish();
                     }
                 },
                 new Response.ErrorListener() {

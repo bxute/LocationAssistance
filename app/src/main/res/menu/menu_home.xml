@@ -5,16 +5,7 @@
     <item android:id="@+id/action_logout" android:title="Logout"
         android:orderInCategory="100" app:showAsAction="never" />
 
-    <item android:id="@+id/action_autosetting" android:title="Auto Settings"
+    <item android:id="@+id/action_issues" android:title="Issues"
         android:orderInCategory="96" app:showAsAction="never" />
-
-
-    <item android:id="@+id/action_reminders" android:title="Reminders"
-        android:orderInCategory="94" app:showAsAction="never" />
-
-
-    <item android:id="@+id/action_friends" android:title="Friends"
-        android:orderInCategory="90" app:showAsAction="never" />
-
 
 </menu>

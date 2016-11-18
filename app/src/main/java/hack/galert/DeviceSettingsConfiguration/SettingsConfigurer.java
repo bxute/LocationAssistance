@@ -41,7 +41,7 @@ public class SettingsConfigurer {
         audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
     }
 
-    private void putOnNormalMode(){
+    public void putOnNormalMode(){
         audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
     }
 

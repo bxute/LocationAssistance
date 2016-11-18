@@ -2,7 +2,10 @@ package hack.galert.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Typeface;
+import android.graphics.drawable.BitmapDrawable;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,6 +13,7 @@ import android.text.Html;
 import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
@@ -26,6 +30,7 @@ import org.json.JSONObject;
 import java.util.HashMap;
 import java.util.Map;
 
+import hack.galert.BlurBuilder;
 import hack.galert.Configs.Constants;
 import hack.galert.connnections.ConnectionUtils;
 import hack.galert.font.FontManager;
@@ -61,6 +66,11 @@ public class Login extends AppCompatActivity {
     }
 
     public void initializeComponents() {
+
+//        ImageView bg = (ImageView) findViewById(R.id.login_bg);
+//        Bitmap oldBitmap = BitmapFactory.decodeResource(getResources(),R.drawable.loginbg);
+//        Bitmap blurredBitmap = BlurBuilder.blur(this,oldBitmap);
+//        bg.setImageBitmap(blurredBitmap);
 
         appIconText = (TextView) findViewById(R.id.appIconText);
         personEmailIconText = (TextView) findViewById(R.id.profileIcon);

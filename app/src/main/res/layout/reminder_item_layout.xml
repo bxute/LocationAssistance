@@ -1,13 +1,27 @@
 <?xml version="1.0" encoding="utf-8"?>
+
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/vibrationWrapper"
+    android:layout_width="match_parent"
+    android:layout_height="60dp"
+    android:layout_below="@+id/mobileDataWrapper"
+    android:layout_margin="8dp"
+    cardView:cardBackgroundColor="#f4f4f4"
+    android:elevation="0dp"
+    cardView:cardCornerRadius="2dp">
+
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
 
+
     <TextView
-        android:textSize="18sp"
-        android:padding="4dp"
+        android:textSize="16sp"
+        android:padding="8dp"
+        android:textColor="@color/PrimaryColorDark"
         android:id="@+id/reminder_title"
         android:text="Milk buying"
         android:layout_width="match_parent"
@@ -16,9 +30,11 @@
     <TextView
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:paddingLeft="8dp"
-        android:layout_margin="8dp"
-        android:paddingRight="8dp"
+        android:paddingLeft="16dp"
+        android:layout_margin="16dp"
+        android:paddingRight="16dp"
+        android:paddingTop="4dp"
+        android:paddingBottom="4dp"
         android:textColor="#ffffff"
         android:layout_marginLeft="4dp"
         android:id="@+id/reminder_delete"
@@ -31,10 +47,12 @@
         android:maxLines="3"
         android:padding="4dp"
         android:id="@+id/reminder_note"
-        android:text="You have to bring milk for kheer..."
+        android:text=""
         android:layout_below="@+id/reminder_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content" />
 
 
 </RelativeLayout>
+
+   </android.support.v7.widget.CardView>

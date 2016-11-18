@@ -9,33 +9,40 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <!--
- The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
-         Google Maps Android API v2, but are recommended.
-    -->
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
 
+    <!--
+     The ACCESS_COARSE/FINE_LOCATION permissions are not required to use
+         Google Maps Android API v2, but are recommended.
+    -->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+
     <application
+        android:name=".app.LocationApp"
         android:allowBackup="true"
-        android:icon="@mipmap/app_icon"
-        android:label="@string/app_name"
+        android:hardwareAccelerated="true"
+        android:icon="@drawable/address_logo"
+        android:label="Location Assistant"
         android:theme="@style/AppTheme" >
+
         <service android:name=".services.LocationUpdaterService" />
+        <service android:name=".services.CheckNotifier"/>
 
         <activity
             android:name=".activity.Home"
-            android:label="@string/app_name"
+            android:label="Location Assistant"
             android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".activity.Login"
-            android:label="NowKnowMore"
-            android:screenOrientation="portrait" >
+            android:label="Location Assistant"
+            android:screenOrientation="portrait">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
         <activity
             android:name=".activity.Register"
@@ -58,9 +65,13 @@
         <meta-data
             android:name="com.google.android.gms.version"
             android:value="@integer/google_play_services_version" />
+        <!--<meta-data-->
+            <!--android:name="com.google.android.maps.v2.API_KEY"-->
+            <!--android:value="@string/google_maps_key" />-->
+
         <meta-data
-            android:name="com.google.android.maps.v2.API_KEY"
-            android:value="@string/google_maps_key" />
+            android:name="com.google.android.geo.API_KEY"
+            android:value="@string/google_maps_key"/>
 
         <activity
             android:name=".activity.LocationTrack"
@@ -73,6 +84,18 @@
         <activity
             android:name=".activity.AutoSettings"
             android:label="@string/title_activity_auto_settings" >
+        </activity>
+        <activity
+            android:name=".activity.LocationSummary"
+            android:label="@string/title_activity_location_summary" >
+        </activity>
+        <activity
+            android:name=".activity.Issues"
+            android:label="@string/title_activity_issues" >
+        </activity>
+        <activity
+            android:name=".activity.test"
+            android:label="@string/title_activity_test" >
         </activity>
     </application>
 

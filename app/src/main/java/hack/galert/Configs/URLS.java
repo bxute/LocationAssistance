@@ -16,4 +16,5 @@ public class URLS {
     public static final String URL_REMINDERS_SET = "http://awasthikamal97.pythonanywhere.com/location/set_reminder";
     public static String URL_REMINDERS_DELETE = "http://awasthikamal97.pythonanywhere.com/location/delete_reminder";
     public static String URL_SETTINGS_DELETE = "http://awasthikamal97.pythonanywhere.com/location/delete_settings";
+    public static String URL_LOCATION_SUMMARY = "http://awasthikamal97.pythonanywhere.com/location/get_summary";
 }

@@ -223,6 +223,25 @@ public class LocalDatabaseHelper extends SQLiteOpenHelper {
 
     }
 
+    public void truncateSettingsTable(){
+
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.execSQL("drop table settings;");
+        sqLiteDatabase.execSQL(CREATE_SETTINGS_TABLE);
+        L.m("Database", "created settings table");
+
+    }
+
+
+    public void truncateRemindersTable(){
+
+        SQLiteDatabase sqLiteDatabase = getWritableDatabase();
+        sqLiteDatabase.execSQL("drop table reminders;");
+        sqLiteDatabase.execSQL(CREATE_REMINDERS_TABLE);
+        L.m("Database", "created reminders table");
+    }
+
+
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldVersion, int newVersion) {
 

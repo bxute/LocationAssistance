@@ -9,35 +9,35 @@
         layout="@layout/toolbar" />
 
 
-    <EditText
-        android:layout_marginTop="16dp"
-        android:background="@drawable/settings_title_editbox_title"
-        android:id="@+id/createSettingsTitle"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="40dp"
+        android:layout_height="match_parent"
         android:layout_below="@+id/toolbar"
-        android:hint="Settings Title"
-        android:paddingLeft="8dp"
-        android:layout_marginLeft="4dp"
-        android:layout_marginRight="4dp"
-        android:paddingRight="8dp" />
+        android:layout_marginTop="16dp">
 
-
-    <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:cardView="http://schemas.android.com/apk/res-auto"
-        android:id="@+id/song_card"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/createSettingsTitle"
-        android:layout_margin="4dp"
-        android:background="@color/PrimaryColor"
-        android:elevation="0dp"
-        cardView:cardCornerRadius="2dp">
-
-        <RelativeLayout
-            android:layout_marginTop="16dp"
+        <EditText
+            android:id="@+id/createSettingsTitle"
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="40dp"
+            android:layout_marginLeft="8dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@drawable/settings_title_editbox_title"
+            android:hint="Settings Title"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp" />
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:cardView="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/bluetoothWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/createSettingsTitle"
+            android:layout_margin="4dp"
+            android:background="@color/PrimaryColor"
+            android:elevation="0dp"
+            cardView:cardCornerRadius="2dp">
 
             <TextView
                 android:id="@+id/volumeLabel"
@@ -45,7 +45,8 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="4dp"
                 android:text="Volume"
-                android:textSize="20sp" />
+                android:textSize="20sp"
+                android:visibility="gone" />
 
             <SeekBar
                 android:id="@+id/volumeControl"
@@ -54,97 +55,165 @@
                 android:layout_below="@+id/volumeLabel"
                 android:layout_margin="4dp"
                 android:max="1"
-                android:progress="0" />
+                android:progress="0"
+                android:visibility="invisible" />
 
-
-            <TextView
-                android:id="@+id/bluetoothLabel"
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/volumeControl"
-                android:layout_margin="4dp"
-                android:text="Bluetooth"
-                android:textSize="20sp" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
 
-            <Switch
-                android:id="@+id/bluetoothSwitch"
+                <TextView
+                    android:textColor="@color/PrimaryColorDark"
+                    android:id="@+id/bluetoothLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="    BLUETOOTH"
+                    android:textSize="20sp" />
+
+                <Switch
+                    android:id="@+id/bluetoothSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_margin="4dp" />
+
+            </RelativeLayout>
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:cardView="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/wifiWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/bluetoothWrapper"
+            android:layout_margin="4dp"
+            android:background="@color/PrimaryColor"
+            android:elevation="0dp"
+            cardView:cardCornerRadius="2dp">
+
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/bluetoothLabel"
-                android:layout_margin="4dp"
-                android:text="Off       " />
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
 
 
-            <TextView
-                android:id="@+id/wifiLabel"
+                <TextView
+                    android:textColor="@color/PrimaryColorDark"
+                    android:id="@+id/wifiLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="    WIFI"
+                    android:textSize="20sp" />
+
+                <Switch
+                    android:id="@+id/wifiSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="4dp" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:cardView="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/mobileDataWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/wifiWrapper"
+            android:layout_margin="4dp"
+            android:background="@color/PrimaryColor"
+            android:elevation="0dp"
+            cardView:cardCornerRadius="2dp">
+
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@+id/bluetoothSwitch"
-                android:layout_margin="4dp"
-                android:text="Wifi"
-                android:textSize="20sp" />
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
 
-            <Switch
-                android:id="@+id/wifiSwitch"
+                <TextView
+                    android:textColor="@color/PrimaryColorDark"
+                    android:id="@+id/MobileDataLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="    MOBILE DATA"
+                    android:textSize="20sp" />
+
+                <Switch
+                    android:id="@+id/mobileDataSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="4dp" />
+
+            </RelativeLayout>
+
+        </android.support.v7.widget.CardView>
+
+        <android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+            xmlns:cardView="http://schemas.android.com/apk/res-auto"
+            android:id="@+id/vibrationWrapper"
+            android:layout_width="match_parent"
+            android:layout_height="60dp"
+            android:layout_below="@+id/mobileDataWrapper"
+            android:layout_margin="4dp"
+            android:background="@color/PrimaryColor"
+            android:elevation="0dp"
+            cardView:cardCornerRadius="2dp">
+
+
+            <RelativeLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/wifiLabel"
-                android:layout_margin="4dp"
-                android:text="Off       " />
+                android:layout_gravity="center_vertical"
+                android:layout_marginLeft="8dp"
+                android:layout_marginRight="8dp">
 
-            <TextView
-                android:id="@+id/MobileDataLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/wifiSwitch"
-                android:layout_margin="4dp"
-                android:text="Mobile Data"
-                android:textSize="20sp" />
+                <TextView
+                    android:textColor="@color/PrimaryColorDark"
+                    android:id="@+id/vibrationLabel"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="4dp"
+                    android:text="    VIBRATION"
+                    android:textSize="20sp" />
 
-            <Switch
-                android:id="@+id/mobileDataSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/MobileDataLabel"
-                android:layout_margin="4dp"
-                android:text="Off       " />
+                <Switch
+                    android:id="@+id/vibrationSwitch"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+                    android:layout_margin="4dp" />
+            </RelativeLayout>
 
+        </android.support.v7.widget.CardView>
 
-            <TextView
-                android:id="@+id/vibrationLabel"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_below="@+id/mobileDataSwitch"
-                android:layout_margin="4dp"
-                android:text="Vibration"
-                android:textSize="20sp" />
+        <Button
+            android:id="@+id/saveSettingButton"
+            android:layout_width="wrap_content"
+            android:layout_height="36dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_below="@+id/vibrationWrapper"
+            android:layout_marginRight="10dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/save_btn_bg"
+            android:text="Save  " />
 
-            <Switch
-                android:id="@+id/vibrationSwitch"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_below="@+id/vibrationLabel"
-                android:layout_margin="4dp"
-                android:text="Off       " />
-
-        </RelativeLayout>
-    </android.support.v7.widget.CardView>
-
-    <Button
-        android:background="@drawable/save_btn_bg"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true"
-        android:id="@+id/saveSettingButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/song_card"
-        android:layout_marginTop="10dp"
-        android:layout_marginRight="10dp"
-        android:text="Save" />
-
+    </RelativeLayout>
 
 </RelativeLayout>

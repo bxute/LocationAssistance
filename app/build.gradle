@@ -11,8 +11,14 @@ android {
         versionCode 1
         versionName "1.0"
 
-        multiDexEnabled  true
+        multiDexEnabled true
     }
+
+
+    aaptOptions {
+        additionalParameters "--no-version-vectors"
+    }
+
 
     dexOptions {
         incremental true
@@ -27,8 +33,10 @@ android {
     }
 }
 
+
 dependencies {
     compile fileTree(dir: 'libs', include: ['*.jar'])
+
 
     compile 'com.android.support:appcompat-v7:24.2.1'
     compile 'com.android.support:design:24.2.1'

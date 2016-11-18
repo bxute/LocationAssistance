@@ -2,6 +2,7 @@ package hack.galert.activity;
 
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.graphics.Typeface;
 import android.os.Handler;
 import android.os.Message;
 import android.support.v7.app.AppCompatActivity;
@@ -15,6 +16,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.SeekBar;
 import android.widget.Switch;
+import android.widget.TextView;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.DefaultRetryPolicy;
@@ -30,6 +32,7 @@ import hack.galert.GPS.GPSTracker;
 import hack.galert.R;
 import hack.galert.TaskAgents.SettingsInvalidatorTask;
 import hack.galert.connnections.VolleyUtils;
+import hack.galert.font.FontManager;
 import hack.galert.models.SettingsModel;
 import hack.galert.sharedpref.SharedPreferenceManager;
 
@@ -76,6 +79,20 @@ public class CreateSettings extends AppCompatActivity {
         volumeLevel = (SeekBar) findViewById(R.id.volumeControl);
         progressDialog =  new ProgressDialog(this);
 
+
+        TextView blthLbl = (TextView) findViewById(R.id.bluetoothLabel);
+        TextView wifiLbl = (TextView) findViewById(R.id.wifiLabel);
+        TextView mobileLbl = (TextView) findViewById(R.id.MobileDataLabel);
+        TextView vibLbl = (TextView) findViewById(R.id.vibrationLabel);
+
+        Typeface tf = FontManager.getInstance(this).getTypeFace(FontManager.FONT_MATERIAL);
+        blthLbl.setTypeface(tf);
+        wifiLbl.setTypeface(tf);
+        mobileLbl.setTypeface(tf);
+        vibLbl.setTypeface(tf);
+        saveBtn.setTypeface(tf);
+
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -116,9 +133,6 @@ public class CreateSettings extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
         getSupportActionBar().setTitle(title);
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
     }
 
     private void allowSettingsRequest() {
@@ -127,7 +141,7 @@ public class CreateSettings extends AppCompatActivity {
 
         final SettingsModel settings = new SettingsModel(
                 title.getText().toString(),
-                volumeLevel.getProgress(),
+                0,
                 bluetooth.isChecked(),
                 wifi.isChecked(),
                 mobileData.isChecked(),
@@ -147,6 +161,8 @@ public class CreateSettings extends AppCompatActivity {
 
                         progressDialog.dismiss();
                         Log.d("SettingsTask", " response " + s);
+                        startActivity(new Intent(CreateSettings.this,AutoSettings.class));
+                        finish();
 
                     }
                 },
@@ -161,8 +177,10 @@ public class CreateSettings extends AppCompatActivity {
             protected Map<String, String> getParams() throws AuthFailureError {
                 HashMap<String, String> map = new HashMap<>();
                 String user = SharedPreferenceManager.getInstance(CreateSettings.this).getUserEmail();
-                String lat = String.valueOf(new GPSTracker(CreateSettings.this).getLatitude());
-                String lon = String.valueOf(new GPSTracker(CreateSettings.this).getLatitude());
+
+                final String lat = String.valueOf(getIntent().getExtras().getDouble("lat"));
+                final String lon = String.valueOf(getIntent().getExtras().getDouble("lon"));
+
 
                 map.put("longitude", lat);
                 map.put("latitude", lon);
@@ -174,6 +192,7 @@ public class CreateSettings extends AppCompatActivity {
                 map.put("bluetooth",settings.bluetoothState+"");
                 map.put("username",user);
                 map.put("activity",settings.title);
+                map.put("title",settings.title);
                 return map;
             }
         };

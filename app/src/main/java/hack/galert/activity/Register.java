@@ -201,7 +201,7 @@ public class Register extends AppCompatActivity {
                     public void onResponse(String response) {
 
                         Log.d("Register","response "+response);
-                        boolean registered = response.equals("");
+                        boolean registered = response.equals("new user registration successful");
 
                         if (registered) {
 //                            SharedPreferenceManager.getInstance(Register.this).setUserFullName(fName);

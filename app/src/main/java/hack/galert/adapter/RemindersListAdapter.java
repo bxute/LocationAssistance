@@ -33,6 +33,7 @@ import hack.galert.TaskAgents.FriendsInvalidatorTask;
 import hack.galert.activity.LocationTrack;
 import hack.galert.connnections.ConnectionUtils;
 import hack.galert.connnections.VolleyUtils;
+import hack.galert.database.LocalDatabaseHelper;
 import hack.galert.log.L;
 import hack.galert.models.FriendsModel;
 import hack.galert.models.SMLReminderModel;
@@ -95,10 +96,6 @@ public class RemindersListAdapter extends ArrayAdapter<SMLReminderModel> {
             @Override
             public void onClick(View view) {
 
-                if(progressDialog==null)progressDialog =  new ProgressDialog(mContext);
-
-                progressDialog.setMessage("Deleting Reminder");
-                progressDialog.show();
                 if (ConnectionUtils.getInstance(mContext).isConnected())
                     deleteReminder(reminderModel._id_reminder+"");
 
@@ -124,7 +121,6 @@ public class RemindersListAdapter extends ArrayAdapter<SMLReminderModel> {
                     public void onResponse(String s) {
                         requestReminders();
                         Log.d("Reminders", " response " + s);
-                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
@@ -197,6 +193,9 @@ public class RemindersListAdapter extends ArrayAdapter<SMLReminderModel> {
 
     private void parseReminderJson(String s) {
 
+        LocalDatabaseHelper helper = LocalDatabaseHelper.getInstance(mContext);
+        helper.truncateRemindersTable();
+
         ArrayList<SMLReminderModel> reminders = new ArrayList<>();
         try {
             JSONArray array = new JSONArray(s);
@@ -205,11 +204,15 @@ public class RemindersListAdapter extends ArrayAdapter<SMLReminderModel> {
 
                 JSONObject reminder = array.getJSONObject(i);
 
-                reminders.add(new SMLReminderModel(reminder.getInt("pk"),
+                SMLReminderModel model =new SMLReminderModel(reminder.getInt("pk"),
                         reminder.getJSONObject("fields").getString("reminder_title"),
                         reminder.getJSONObject("fields").getString("reminder_text"),
                         reminder.getJSONObject("fields").getString("latitude"),
-                        reminder.getJSONObject("fields").getString("longitude")));
+                        reminder.getJSONObject("fields").getString("longitude"));
+
+                helper.writeReminder(model);
+                reminders.add(model);
+
             }
 
             setReminders(reminders);

@@ -28,6 +28,7 @@ import hack.galert.Configs.URLS;
 import hack.galert.R;
 import hack.galert.connnections.ConnectionUtils;
 import hack.galert.connnections.VolleyUtils;
+import hack.galert.database.LocalDatabaseHelper;
 import hack.galert.models.SMLReminderModel;
 import hack.galert.models.SettingsModel;
 import hack.galert.sharedpref.SharedPreferenceManager;
@@ -107,7 +108,7 @@ public class AutoSettingsListAdapter extends ArrayAdapter<SettingsModel> {
     private void deleteSetting(final String lat, final String lon) {
 
         final String url = URLS.URL_SETTINGS_DELETE;
-        Log.d("Reminders", "attempt delete reminders");
+        Log.d("Settings", "attempt delete settings");
         StringRequest navItemsListRequest = new StringRequest(
                 StringRequest.Method.POST,
                 url,
@@ -115,7 +116,7 @@ public class AutoSettingsListAdapter extends ArrayAdapter<SettingsModel> {
                     @Override
                     public void onResponse(String s) {
                         requestSettings();
-                        Log.d("Reminders", " response " + s);
+                        Log.d("Settings", " response " + s);
                         progressDialog.dismiss();
                     }
                 },
@@ -149,15 +150,15 @@ public class AutoSettingsListAdapter extends ArrayAdapter<SettingsModel> {
     private void requestSettings() {
 
         final String url = URLS.URL_SETTINGS_GET;
-        Log.d("Reminders", "attempt delete reminders");
+
         StringRequest navItemsListRequest = new StringRequest(
                 StringRequest.Method.POST,
                 url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String s) {
-                        parseReminderJson(s);
-                        Log.d("Reminders", " response " + s);
+                        parseSettingsJson(s);
+                        Log.d("Settings", " response " + s);
                     }
                 },
                 new Response.ErrorListener() {
@@ -186,7 +187,10 @@ public class AutoSettingsListAdapter extends ArrayAdapter<SettingsModel> {
 
     }
 
-    private void parseReminderJson(String s) {
+    private void parseSettingsJson(String s) {
+
+       LocalDatabaseHelper helper =  LocalDatabaseHelper.getInstance(mContext);
+        helper.truncateSettingsTable();
 
         ArrayList<SettingsModel> settings = new ArrayList<>();
         try {
@@ -196,14 +200,18 @@ public class AutoSettingsListAdapter extends ArrayAdapter<SettingsModel> {
 
                 JSONObject setting = array.getJSONObject(i);
 
-                settings.add(new SettingsModel(setting.getString("pk"),
-                        setting.getDouble("volumeLevel"),
-                        setting.getBoolean("bluetooth"),
-                        setting.getBoolean("wifi"),
-                        setting.getBoolean("mobileData"),
-                        setting.getBoolean("vibrationMode"),
-                        setting.getString("latitude"),
-                        setting.getString("longitude")));
+                SettingsModel model = new SettingsModel(
+                        setting.getJSONObject("fields").getString("title"),
+                        setting.getJSONObject("fields").getDouble("volumeLevel"),
+                        setting.getJSONObject("fields").getBoolean("bluetooth"),
+                        setting.getJSONObject("fields").getBoolean("wifi"),
+                        setting.getJSONObject("fields").getBoolean("mobileData"),
+                        setting.getJSONObject("fields").getBoolean("vibrationMode"),
+                        setting.getJSONObject("fields").getString("latitude"),
+                        setting.getJSONObject("fields").getString("longitude"));
+
+                helper.writeSetting(model);
+                settings.add(model);
             }
 
             setSettings(settings);
